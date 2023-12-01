@@ -1,6 +1,6 @@
 # Monde-de-dév by ORION (MVP)
 
-🤝 Boost your career, find your next dev job or meet with developpers with common interests to get your work done.
+🤝 Boost your career : find your next dev job or meet with developpers with common interests, to get your work done.
 
 ## 🛠 Software tools
 
@@ -24,8 +24,8 @@ Create a database with the name `mdd`.
 Go inside folder :
 > cd back
 
-In your IDE :
-Add 2 environment variables with your database credentials for the `application.properties` file :
+In your IDE :  
+Add 2 environment variables with your database credentials, for the `application.properties` file :
 
 >spring.datasource.username=${DB_USER}
 
@@ -46,8 +46,10 @@ Install the dependencies :
 > npm install
 
 Launch the dev server :
-> ng serve
+> ng serve  
+
 or
+
 > npm run start
 
 Navigate to http://localhost:4200/
@@ -55,7 +57,7 @@ Navigate to http://localhost:4200/
 Build the project :
 > ng build
 
-The build artifacts will be stored in the dist/ directory.
+The build artifacts will be stored in the `dist/` directory.
 
 ## ✍ Author
 Daphné Duchêne
