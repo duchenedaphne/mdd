@@ -1,6 +1,6 @@
 # Monde-de-dév by ORION (MVP)
 
-🤝 Boost your career : find your next dev job or meet with developpers with common interests, to get your work done.
+🤝 Boost your career : meet with developpers with common interests, to find your next dev job or to get your work done.
 
 ## 🛠 Software tools
 
