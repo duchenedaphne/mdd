@@ -1,14 +1,19 @@
 package com.openclassrooms.mddapi.service.comment;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.mapper.CommentMapper;
 import com.openclassrooms.mddapi.model.Comment;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.CommentRepository;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
+import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,8 +23,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class CommentServiceImpl implements CommentService {
     
-	private CommentRepository commentRepository;
+    @Autowired
+	private final CommentRepository commentRepository;
+    @Autowired
     private final CommentMapper commentMapper;
+    @Autowired
+    private final UserServiceImpl userService;
 
 	@Override
 	public List<Comment> getComments() {
@@ -38,12 +47,6 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public Comment create(Comment comment) throws Exception {
-		return commentRepository.save(comment);
-	}
-
-	@Override
-	public Comment update(Long id, Comment comment) throws Exception {
-		comment.setId(id);
 		return commentRepository.save(comment);
 	}
 
@@ -84,32 +87,22 @@ public class CommentServiceImpl implements CommentService {
         }
 	}
 
-	public ResponseEntity<?> create_comment(CommentDto commentDto) {
+	public ResponseEntity<?> create_comment(CommentDto commentDto, UserDetailsImpl userDetails) {
 		
+        commentDto.setCreatedAt(LocalDateTime.now());
         log.info(commentDto);
 
         Comment comment;
+        User userApp = new User();
         try {
+            userApp = userService.findByEmail(userDetails.getUsername());
+            commentDto.setUser_id(userApp.getId()); 
+
             comment = create(this.commentMapper.toEntity(commentDto));
 
             log.info(comment);
             return ResponseEntity.ok().body(this.commentMapper.toDto(comment));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-	}
-
-	public ResponseEntity<?> update_comment(String id, CommentDto commentDto) {
-		
-        try {
-            Comment comment = update(Long.parseLong(id), this.commentMapper.toEntity(commentDto));
-
-            return ResponseEntity.ok().body(this.commentMapper.toDto(comment));
-
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

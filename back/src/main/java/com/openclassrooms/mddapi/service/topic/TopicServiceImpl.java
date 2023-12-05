@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.service.topic;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +25,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class TopicServiceImpl implements TopicService {
 
-	private TopicRepository topicRepository;
+    @Autowired
+	private final TopicRepository topicRepository;
+    @Autowired
 	private final TopicMapper topicMapper;
-	private UserRepository userRepository;
+    @Autowired
+	private final UserRepository userRepository;
 
 	@Override
 	public List<Topic> getTopics() {
@@ -40,12 +45,6 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Topic findById(Long id) throws Exception {
 		return topicRepository.findById(id).orElse(null);
-	}
-
-	@Override
-	public Topic update(Long id, Topic topic) throws Exception {
-		topic.setId(id);
-		return topicRepository.save(topic);
 	}
 
 	@Override
@@ -134,6 +133,7 @@ public class TopicServiceImpl implements TopicService {
 
 	public ResponseEntity<?> create_topic(TopicDto topicDto) {
 		
+        topicDto.setCreatedAt(LocalDateTime.now());
         log.info(topicDto);
 
         Topic topic;
@@ -143,21 +143,6 @@ public class TopicServiceImpl implements TopicService {
             log.info(topic);
             return ResponseEntity.ok().body(this.topicMapper.toDto(topic));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-	}
-
-	public ResponseEntity<?> update_topic(String id, TopicDto topicDto) {
-		
-        try {
-            Topic topic = update(Long.parseLong(id), this.topicMapper.toEntity(topicDto));
-
-            return ResponseEntity.ok().body(this.topicMapper.toDto(topic));
-
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

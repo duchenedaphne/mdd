@@ -1,14 +1,19 @@
 package com.openclassrooms.mddapi.service.post;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
+import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,8 +23,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class PostServiceImpl implements PostService {
 
-	private PostRepository postRepository;
+    @Autowired
+	private final PostRepository postRepository;
+    @Autowired
     private final PostMapper postMapper;
+    @Autowired
+    private final UserServiceImpl userService;
 
 	@Override
 	public List<Post> getPosts() {
@@ -34,12 +43,6 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Post findById(Long id) throws Exception {
 		return postRepository.findById(id).orElse(null);
-	}
-
-	@Override
-	public Post update(Long id, Post post) throws Exception {
-		post.setId(id);
-		return postRepository.save(post);
 	}
 
 	@Override
@@ -84,32 +87,22 @@ public class PostServiceImpl implements PostService {
         }
 	}
 
-	public ResponseEntity<?> create_post(PostDto postDto) {
+	public ResponseEntity<?> create_post(PostDto postDto, UserDetailsImpl userDetails) {
 		
+        postDto.setCreatedAt(LocalDateTime.now());
         log.info(postDto);
 
         Post post;
+        User userApp = new User();
         try {
+            userApp = userService.findByEmail(userDetails.getUsername());
+            postDto.setUser_id(userApp.getId()); 
+
             post = create(this.postMapper.toEntity(postDto));
 
             log.info(post);
             return ResponseEntity.ok().body(this.postMapper.toDto(post));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-	}
-
-	public ResponseEntity<?> update_post(String id, PostDto postDto) {
-		
-        try {
-            Post post = update(Long.parseLong(id), this.postMapper.toEntity(postDto));
-
-            return ResponseEntity.ok().body(this.postMapper.toDto(post));
-
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

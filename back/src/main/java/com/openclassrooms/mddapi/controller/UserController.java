@@ -1,6 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.payload.request.SignupRequest;
 import com.openclassrooms.mddapi.service.user.UserServiceImpl;
+
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +23,12 @@ public class UserController {
         return userService.find_by_id(id);
     }
 
-    @DeleteMapping("{id}")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody SignupRequest signUpRequest) {
+        return userService.update_account(id, signUpRequest);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return userService.delete_account(id);
     }

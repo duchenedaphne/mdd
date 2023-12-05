@@ -12,8 +12,6 @@ public interface CommentService {
 
     public Comment findById(Long id) throws Exception;
 
-    public Comment update(Long id, Comment comment) throws Exception;
-
     public String delete(Long id) throws Exception;
 
     public List<Comment> findAll() throws Exception;

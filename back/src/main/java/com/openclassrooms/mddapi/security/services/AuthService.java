@@ -42,15 +42,14 @@ public class AuthService {
     public ResponseEntity<?> login(LoginRequest loginRequest) {
 
         User user;
-        Matcher matcher = emailFormatChecker(loginRequest.getEmail());
         HttpStatus status;
-        Authentication authentication;
+        Matcher matcher = emailFormatChecker(loginRequest.getEmail());
 
         try {
             if (matcher.matches() == false)
                 user = userServiceImpl.findByUserName(loginRequest.getEmail());
-            else
-                user = userServiceImpl.findByEmail(loginRequest.getEmail());
+            else               
+                user = userServiceImpl.findByEmail(loginRequest.getEmail());                
 
             if (user == null)
                 return new ResponseEntity<String>("Identifiant inconnu, veuillez créer un compte.", HttpStatus.NOT_FOUND);
@@ -58,13 +57,15 @@ public class AuthService {
             if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {                 
                 return new ResponseEntity<String>("Mot de passe incorrect.", HttpStatus.UNAUTHORIZED);
             }
-        
-            authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getEmail(), loginRequest.getPassword())
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             String jwt = jwtUtils.generateJwtToken(authentication);
+            
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
             return ResponseEntity.ok(
@@ -72,9 +73,9 @@ public class AuthService {
                                 jwt,
                                 userDetails.getId(),
                                 userDetails.getUsername(),
-                                userDetails.getEmail()
+                                userDetails.getTheUserName()
                 )
-            ); 
+            );
         } catch (HttpStatusCodeException exception) {
             status = exception.getStatusCode();
             return new ResponseEntity<String>("Échec de la connexion, veuillez réessayer.", status);
@@ -84,9 +85,6 @@ public class AuthService {
                     .badRequest()
                     .body(new MessageResponse("Échec de la connexion, veuillez réessayer."));
         }
-        // User user = this.userServiceImpl.findByEmail(userDetails.getUsername()).orElse(null);
-            // authResponse.setToken(jwteToken);
-        // return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
     }
 
     public ResponseEntity<?> register(SignupRequest signUpRequest) {
@@ -109,9 +107,9 @@ public class AuthService {
             return new ResponseEntity<String>("Impossible de vérifier l'email.", status);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
-
-        // Create new user's account
+        
         User user = new User();
         
         user.setEmail(signUpRequest.getEmail());
@@ -128,10 +126,10 @@ public class AuthService {
             return new ResponseEntity<String>("Impossible de créer le compte.", status);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(new MessageResponse("Compte créé avec succès!"));        
-        // return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        return ResponseEntity.ok(new MessageResponse("Compte créé avec succès!"));
     }
 
     public ResponseEntity<?> getUserApp(UserDetails userDetails) {
@@ -148,6 +146,7 @@ public class AuthService {
 
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         } 
         return new ResponseEntity<User>(userApp, HttpStatus.OK);
     }

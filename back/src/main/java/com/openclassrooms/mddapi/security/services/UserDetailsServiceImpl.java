@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.security.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
   
+  @Autowired
   UserRepository userRepository;
 
   @Override
@@ -27,10 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     return UserDetailsImpl
             .builder()
             .id(user.getId())
-            .email(user.getEmail())
-            .username(user.getUserName())
+            .theUserName(user.getUserName())
+            .username(user.getEmail())
             .password(user.getPassword())
             .build();
   }
-
 }

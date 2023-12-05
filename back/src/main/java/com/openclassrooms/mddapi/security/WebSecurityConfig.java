@@ -19,8 +19,6 @@ import com.openclassrooms.mddapi.security.jwt.AuthTokenFilter;
 import lombok.RequiredArgsConstructor;
 
 @EnableGlobalMethodSecurity(
-    // securedEnabled = true,
-    // jsr250Enabled = true,
     prePostEnabled = true
 )
 @Configuration
@@ -37,27 +35,25 @@ public class WebSecurityConfig {
 
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(withDefaults())
-        .csrf(csrf -> csrf.disable())
-        .exceptionHandling(
-          handling -> handling
-              .authenticationEntryPoint(unauthorizedHandler)
-        )
-        .authorizeRequests(
-          requests -> requests
-              .antMatchers("/api/auth/**").permitAll()
-              .antMatchers("/api/**").authenticated()
-              .anyRequest().authenticated()
-        )
-        .sessionManagement(
-          management -> management
-              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-        .authenticationProvider(authenticationProvider)
-        .addFilterBefore(
-          authTokenFilter, UsernamePasswordAuthenticationFilter.class
-        );
+      http
+          .cors(withDefaults())
+          .csrf(csrf -> csrf.disable())
+          .authorizeRequests(requests -> requests
+                  .antMatchers("/api/auth/**").permitAll()
+                  .anyRequest().authenticated())
+          .exceptionHandling(
+                  handling -> handling
+                          .authenticationEntryPoint(unauthorizedHandler)
+          )
+          .sessionManagement(
+                  management -> management
+                          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+          )
+          .authenticationProvider(authenticationProvider)
+          .addFilterBefore(
+                  authTokenFilter,
+                  UsernamePasswordAuthenticationFilter.class
+          );
     http
         .headers( 
             headers -> headers

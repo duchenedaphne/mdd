@@ -1,10 +1,12 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import com.openclassrooms.mddapi.service.post.PostServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,28 +18,23 @@ import javax.validation.Valid;
 public class PostController {
 
     private final PostServiceImpl postService;
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
-        return postService.find_by_id(id);
-    }
-
+    
     @GetMapping()
     public ResponseEntity<?> findAll() {
         return postService.find_all();
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @RequestBody PostDto postDto) {
-        return postService.create_post(postDto);
+    public ResponseEntity<?> create(@Valid @RequestBody PostDto postDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.create_post(postDto, userDetails);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody PostDto postDto) {
-        return postService.update_post(id, postDto);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+        return postService.find_by_id(id);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return postService.delete_post(id);
     }

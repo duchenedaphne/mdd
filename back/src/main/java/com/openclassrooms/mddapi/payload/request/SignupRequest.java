@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class SignupRequest {
+  
   @NotBlank
   @Size(max = 50)
   @Email

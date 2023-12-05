@@ -12,8 +12,6 @@ public interface TopicService {
 
     public Topic findById(Long id) throws Exception;
 
-    public Topic update(Long id, Topic topic) throws Exception;
-
     public String delete(Long id) throws Exception;
 
     public List<Topic> findAll() throws Exception;

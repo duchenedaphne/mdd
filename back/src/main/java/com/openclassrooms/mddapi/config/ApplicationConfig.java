@@ -13,18 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.openclassrooms.mddapi.security.jwt.AuthTokenFilter;
 import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
 public class ApplicationConfig {
 
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
   @Bean
-  PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+  AuthTokenFilter authTokenFilter() {
+    return new AuthTokenFilter();
   }
 
   @Bean
@@ -44,7 +41,7 @@ public class ApplicationConfig {
   }
 
   @Bean
-  AuthTokenFilter authenticationJwtTokenFilter() {
-    return new AuthTokenFilter();
+  PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }

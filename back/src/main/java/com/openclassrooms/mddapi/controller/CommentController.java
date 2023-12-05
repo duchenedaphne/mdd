@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.CommentDto;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import com.openclassrooms.mddapi.service.comment.CommentServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,27 +19,22 @@ public class CommentController {
 
     private final CommentServiceImpl commentService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable("id") String id) {
-        return commentService.find_by_id(id);
-    }
-
     @GetMapping()
     public ResponseEntity<?> findAll() {
         return commentService.find_all();
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @RequestBody CommentDto commentDto) {
-        return commentService.create_comment(commentDto);
+    public ResponseEntity<?> create(@Valid @RequestBody CommentDto commentDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return commentService.create_comment(commentDto, userDetails);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody CommentDto commentDto) {
-        return commentService.update_comment(id, commentDto);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") String id) {
+        return commentService.find_by_id(id);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return commentService.delete_comment(id);
     }
