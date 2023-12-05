@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (HttpStatusCodeException exception) {
             status = exception.getStatusCode();
-            return new ResponseEntity<String>("Impossible de vérifier l'email.", status);
+            return new ResponseEntity<String>("Mise à jour impossible.", status);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
