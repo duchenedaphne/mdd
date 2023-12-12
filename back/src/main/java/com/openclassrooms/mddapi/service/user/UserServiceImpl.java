@@ -150,14 +150,26 @@ public class UserServiceImpl implements UserService {
             if (user == null)
                 return ResponseEntity.notFound().build();
 
-            userUpdated.setEmail(user.getEmail());
             userUpdated.setUserName(signUpRequest.getUserName());
-            userUpdated.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+            userUpdated.setPassword(user.getPassword());
             userUpdated.setCreatedAt(user.getCreatedAt());
             userUpdated.setUpdatedAt(LocalDateTime.now());
+            userUpdated.setEmail(user.getEmail());
+
+            // String responseMessage = userUpdated.getEmail() + " = " + user.getEmail();
+
+            // if (String.valueOf(userUpdated.getEmail()) != String.valueOf(user.getEmail()))
+            //     return ResponseEntity
+            //         .badRequest()
+            //         .body(new MessageResponse(responseMessage));
 
             update(Long.valueOf(id), userUpdated);
 
+            // else if (userRepository.existsByEmail(userUpdated.getEmail()))
+            //         return ResponseEntity
+            //             .badRequest()
+            //             .body(new MessageResponse("Un compte existe déjà avec cette adresse email !"));
+                        
         } catch (HttpStatusCodeException exception) {
             status = exception.getStatusCode();
             return new ResponseEntity<String>("Mise à jour impossible.", status);

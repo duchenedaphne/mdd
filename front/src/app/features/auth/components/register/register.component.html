@@ -1,0 +1,42 @@
+
+<mat-toolbar>
+    <img src="/assets/logo_p6.png" alt="logo" />
+</mat-toolbar>
+
+<span class="arrow-left" (click)=back()>&larr;</span>
+
+<div class="register">
+    <h2>Inscription</h2>
+
+    <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="inputField">
+            <input class="mat-input" matInput placeholder="" formControlName="userName">
+
+            <span class="fakePlaceholder">
+                Nom d'utilisateur
+            </span>
+        </div>
+            
+        <div class="inputField">
+            <input class="mat-input" matInput placeholder="" formControlName="email">
+
+            <span class="fakePlaceholder">
+                Adresse e-mail
+            </span>
+        </div>
+            
+        <div class="inputField">
+            <input class="mat-input" matInput placeholder="" formControlName="password">
+
+            <span class="fakePlaceholder">
+                Mot de passe
+            </span>
+        </div>
+
+        <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">S'inscrire</button>
+
+        <span *ngIf="onError" class="error ml2">Erreur</span>
+    </form>
+</div>
+

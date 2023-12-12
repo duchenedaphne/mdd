@@ -1,0 +1,32 @@
+
+<div class="detail-page">
+    <button mat-icon-button routerLink="articles">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <mat-card *ngIf="post" class="article">
+        <mat-card-title>
+            <h1>{{ title | titlecase }}</h1>
+        </mat-card-title>
+
+        <mat-card-subtitle class="subtitle">
+            <p>Date: {{ createdAt| date: 'longDate' }}</p>
+            <p>Auteur: {{ author }}</p>
+            <p>Thème: {{ topic }}</p>
+        </mat-card-subtitle>
+
+        <mat-card-content>
+            <div class="description">
+                <p>Contenu: {{ content }} <br></p>
+            </div>
+        </mat-card-content>
+
+        <hr>
+
+        <p>Commentaires</p>
+        <app-comments-list></app-comments-list>
+
+        <app-comments-form></app-comments-form>
+    </mat-card>
+</div>
+  

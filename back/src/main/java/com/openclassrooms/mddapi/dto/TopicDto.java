@@ -24,6 +24,8 @@ public class TopicDto {
     @Size(max = 50)
     private String name;
 
+    private String description;
+
     private List<Long> users;
 
     private LocalDateTime createdAt;

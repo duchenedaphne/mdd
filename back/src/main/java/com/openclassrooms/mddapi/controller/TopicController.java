@@ -30,6 +30,11 @@ public class TopicController {
         return topicService.find_all();
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findAllByPostId(@PathVariable("id") String id) {
+        return topicService.find_all_by_user_id(id);
+    }
+
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody TopicDto topicDto) {
         return topicService.create_topic(topicDto);

@@ -1,0 +1,37 @@
+
+<div class="create m3">
+    <mat-card>
+      <mat-card-title>
+        <div>
+
+          <button mat-icon-button routerLink="themes">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+
+          <h1>Créer un thème</h1>
+        </div>
+      </mat-card-title>
+
+      <mat-card-content *ngIf="topicForm">
+        <form class="mt2" [formGroup]="topicForm" (ngSubmit)="submit()">
+          <mat-form-field appearance="outline" class="" fxFlex>
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Description</mat-label>
+            <textarea matInput rows="8" formControlName="description"></textarea>
+          </mat-form-field>
+
+          <div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="topicForm.invalid">
+              Enregistrer
+            </button>
+          </div>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

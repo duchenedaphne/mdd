@@ -1,0 +1,34 @@
+
+<div class="list">
+    <div class="header-create">
+
+        <button mat-raised-button color="primary" routerLink="create">
+            <span class="ml1">Créer un article</span>
+        </button>
+
+        <p>Trier par &darr;</p>
+    </div>
+
+    <div class="items mt2">
+
+        <mat-card class="item" *ngFor="let post of (posts$ | async)" fxFlex>
+
+            {{ fetchAuthor(post.user_id) }}
+
+            <mat-card-header class="header-card">
+                <mat-card-title>{{ post.title | titlecase }}</mat-card-title>
+
+                <mat-card-subtitle class="header-subtitle">
+                    Date : {{ post.createdAt | date: 'longDate'}}
+                    Auteur : {{ author }}
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content class="content" [routerLink]="['detail',post.id]">
+                <p>Content: {{ post.content }}</p>
+            </mat-card-content>
+        
+        </mat-card>
+    </div>
+</div>
+  

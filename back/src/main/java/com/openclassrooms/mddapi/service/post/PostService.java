@@ -6,13 +6,13 @@ import com.openclassrooms.mddapi.model.Post;
 
 public interface PostService {
 
-	List<Post> getPosts();
+	public List<Post> getPosts();
+
+    public List<Post> findAll() throws Exception;
 
     public Post create(Post post) throws Exception;
 
     public Post findById(Long id) throws Exception;
 
     public String delete(Long id) throws Exception;
-
-    public List<Post> findAll() throws Exception;
 }

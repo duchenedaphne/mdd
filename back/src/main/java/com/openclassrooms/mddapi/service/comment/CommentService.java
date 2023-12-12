@@ -6,7 +6,9 @@ import com.openclassrooms.mddapi.model.Comment;
 
 public interface CommentService {
     
-	List<Comment> getComments();
+	public List<Comment> getComments();
+
+    public List<Comment> findAllByPostId(Long id) throws Exception;
 
     public Comment create(Comment comment) throws Exception;
 

@@ -5,6 +5,8 @@ import java.util.List;
 import com.openclassrooms.mddapi.model.User;
 
 public interface UserService {
+
+    public List<User> findAll() throws Exception;
     
     public User create(User user) throws Exception;
 
@@ -13,8 +15,6 @@ public interface UserService {
     public User update(Long id, User user) throws Exception;
 
     public String delete(Long id) throws Exception;
-
-    public List<User> findAll() throws Exception;
 
     public User findByEmail(String email) throws Exception;
 

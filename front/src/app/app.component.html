@@ -1,3 +1,25 @@
-<!-- <router-outlet></router-outlet> -->
 
-<app-topic></app-topic>
+<ng-template #notLogged>
+    <router-outlet></router-outlet>
+</ng-template>
+
+<div *ngIf="$isLogged() | async; else notLogged">
+
+    <mat-toolbar color="lighter" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <img src="/assets/logo_p6.png" alt="logo" />
+
+            <div>
+                <span routerLink="articles" class="link">Articles</span>
+
+                <span routerLink="themes" class="link">Thèmes</span>
+
+                <span routerLink="me" class="link">
+                    <mat-icon>account_circle</mat-icon>
+                </span>
+            </div>
+        
+    </mat-toolbar>
+
+    <router-outlet></router-outlet>
+</div>

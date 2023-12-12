@@ -16,6 +16,7 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
+import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +32,8 @@ public class TopicServiceImpl implements TopicService {
 	private final TopicMapper topicMapper;
     @Autowired
 	private final UserRepository userRepository;
+    @Autowired
+    private final UserServiceImpl userService;
 
 	@Override
 	public List<Topic> getTopics() {
@@ -57,6 +60,12 @@ public class TopicServiceImpl implements TopicService {
 	public List<Topic> findAll() throws Exception {
 		return topicRepository.findAll();
 	}
+
+    @Override
+    public List<Topic> findAllByUserId(Long id) throws Exception {
+        User user = userService.findById(id);
+        return topicRepository.findAllByUsers(user);
+    }
 
 	@Override
 	public void subscribe(Long id, Long userId) throws Exception {
@@ -123,6 +132,19 @@ public class TopicServiceImpl implements TopicService {
         List<Topic> topics;
         try {
             topics = findAll();
+            return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+	}
+
+	public ResponseEntity<?> find_all_by_user_id(String postId) {
+
+        List<Topic> topics;
+        try {
+            topics = findAllByUserId(Long.valueOf(postId));
             return ResponseEntity.ok().body(this.topicMapper.toDto(topics));
             
         } catch (Exception e) {

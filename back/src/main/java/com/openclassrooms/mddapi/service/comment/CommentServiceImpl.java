@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.mapper.CommentMapper;
 import com.openclassrooms.mddapi.model.Comment;
+import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.CommentRepository;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
+import com.openclassrooms.mddapi.service.post.PostServiceImpl;
 import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,8 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentMapper commentMapper;
     @Autowired
+    private final PostServiceImpl postService;
+    @Autowired
     private final UserServiceImpl userService;
 
 	@Override
@@ -36,14 +40,15 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Comment findById(Long id) throws Exception {
-		return commentRepository.findById(id).orElse(null);
-	}
-
-	@Override
 	public List<Comment> findAll() throws Exception {
 		return commentRepository.findAll();
 	}
+
+    @Override
+    public List<Comment> findAllByPostId(Long id) throws Exception {
+        Post post = postService.findById(id);
+        return commentRepository.findAllByPost(post);
+    }
 
 	@Override
 	public Comment create(Comment comment) throws Exception {
@@ -51,34 +56,21 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	public Comment findById(Long id) throws Exception {
+		return commentRepository.findById(id).orElse(null);
+	}
+
+	@Override
 	public String delete(Long id) throws Exception {
 		commentRepository.deleteById(id);
 		return "L'article a bien été supprimé.";
 	}
-	
-	public ResponseEntity<?> find_by_id(String id) {
 
-        try {
-            Comment comment = findById(Long.valueOf(id));
+	public ResponseEntity<?> find_all_by_post_id(String postId) {
 
-            if (comment == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok().body(this.commentMapper.toDto(comment));
-
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-	}
-
-	public ResponseEntity<?> find_all() {
-		
         List<Comment> comments;
         try {
-            comments = findAll();
+            comments = findAllByPostId(Long.valueOf(postId));
             return ResponseEntity.ok().body(this.commentMapper.toDto(comments));
             
         } catch (Exception e) {
@@ -103,6 +95,24 @@ public class CommentServiceImpl implements CommentService {
             log.info(comment);
             return ResponseEntity.ok().body(this.commentMapper.toDto(comment));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+	}
+	
+	public ResponseEntity<?> find_by_id(String id) {
+
+        try {
+            Comment comment = findById(Long.valueOf(id));
+
+            if (comment == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok().body(this.commentMapper.toDto(comment));
+
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

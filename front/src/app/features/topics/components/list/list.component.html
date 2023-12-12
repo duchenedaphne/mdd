@@ -1,0 +1,60 @@
+
+<div class="list">
+    <mat-card>
+      <mat-card-header>
+
+        <button mat-raised-button color="primary" routerLink="create">
+          <span class="ml1">Créer un thème</span>
+        </button>
+
+        <p>Trier par &darr;</p>
+
+      </mat-card-header>
+
+      <div class="items mt2">
+
+        <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
+
+            <mat-card-header>
+                <mat-card-title>
+                    <div>
+                        <h1>{{topic.name | titlecase}}</h1>
+                    </div>            
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="description">
+                    <p>Description: {{ topic.description }}</p>
+                    <br>
+                </div>
+
+                <div class="my2">
+                    <div>
+                        <mat-icon>group</mat-icon>
+                        <span class="ml1">{{ topic.users.length }} abonnés</span>
+                    </div>                
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <div>
+                    <button *ngIf="!topic.users.includes(userId) && topic.id" mat-raised-button color="primary" (click)="subscribe(topic.id)">
+                        <mat-icon>person_add</mat-icon>
+                        <span class="ml1">S'abonner</span>
+                    </button>
+
+                    <button *ngIf="topic.users.includes(userId) && topic.id" mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
+                        <mat-icon>person_remove</mat-icon>
+                        <span class="ml1">Se désabonner</span>
+                    </button>  
+                </div>
+            </mat-card-actions>
+
+        </mat-card>
+      </div>
+
+    </mat-card>
+</div>
+  
+

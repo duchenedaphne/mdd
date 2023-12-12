@@ -1,0 +1,14 @@
+
+<ng-template #notLogged>
+    <div class="center">
+        <img src="/assets/logo_p6.png" alt="logo" />
+        
+        <div class="start-btns">
+            <button mat-raised-button class="start-btn" routerLink="fr/login">Se connecter</button>
+            <button mat-raised-button class="start-btn" routerLink="fr/register">S'inscrire</button>
+        </div> 
+    </div>
+</ng-template>
+
+<div *ngIf="$isLogged() | async; else notLogged" class="app">
+</div>

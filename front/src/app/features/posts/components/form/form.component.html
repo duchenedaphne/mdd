@@ -1,0 +1,41 @@
+
+<div class="create m3">
+    <mat-card>
+        <mat-card-title>
+            <div>
+            <button mat-icon-button routerLink="articles">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            </div>
+        </mat-card-title>
+
+        <mat-card-content *ngIf="postForm">
+            <form class="mt2" [formGroup]="postForm" (ngSubmit)="submit()">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Thème</mat-label>                
+                    <mat-select ngDefaultControl formControlName="topic_id">
+                        <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">{{topic.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="" fxFlex>
+                    <mat-label>Titre</mat-label>
+                    <input matInput formControlName="title">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Contenu</mat-label>
+                    <textarea matInput rows="8" formControlName="content"></textarea>
+                </mat-form-field>
+
+                <div>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+                        Créer
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+  

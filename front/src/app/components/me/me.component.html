@@ -1,0 +1,54 @@
+
+<div class="profil">
+    <h2>Profil utilisateur</h2>
+
+    <form class="profil-form" [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="inputField">
+            <input class="mat-input" matInput placeholder="Nom d'utilisateur" formControlName="userName" value={{ userName }}>
+        </div>
+            
+        <div class="inputField">
+            <input class="mat-input" matInput placeholder="Adresse e-mail" formControlName="email" value={{ email }}>
+        </div>
+
+        <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
+
+        <span *ngIf="onError" class="error ml2">Erreur</span>
+    </form>
+
+    <p color="warn" (click)="logout()" class="link">Se déconnecter</p>
+</div>
+
+<hr>
+
+<div class="m3 list">
+    <div>
+        <h1>Abonnements</h1>
+    </div>
+    <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
+        <mat-card-header>
+            <mat-card-title>
+                <h3>{{ topic.name }}</h3>
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="description">            
+                <p>Description: {{ topic.description }}</p>
+                <br>
+            </div>
+        </mat-card-content>
+            
+        <mat-card-actions>
+            <div class="my2">
+                <button *ngIf="topic.id" mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
+                    <mat-icon>person_remove</mat-icon>
+                    <span class="ml1"> Se désabonner</span>
+                </button>
+            </div>
+        </mat-card-actions>
+
+    </mat-card>
+</div>
+  

@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,39 +7,42 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-// import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
-import { TopicComponent } from './topic/topic.component';
-import { InscriptionComponent } from './pages/inscription/inscription.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { MeComponent } from './components/me/me.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent, 
     HomeComponent,
-    TopicComponent,
-    InscriptionComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [    
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

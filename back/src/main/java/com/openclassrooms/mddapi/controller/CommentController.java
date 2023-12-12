@@ -19,9 +19,9 @@ public class CommentController {
 
     private final CommentServiceImpl commentService;
 
-    @GetMapping()
-    public ResponseEntity<?> findAll() {
-        return commentService.find_all();
+    @GetMapping("/post/{id}")
+    public ResponseEntity<?> findAllByPostId(@PathVariable("id") String id) {
+        return commentService.find_all_by_post_id(id);
     }
 
     @PostMapping()
