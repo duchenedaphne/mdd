@@ -26,9 +26,9 @@ public class PostDto {
     @NotBlank
     private String content;
 
-    private Long topic_id;
+    private String topic_name;
 
-    private Long user_id;
+    private String user_name;
 
     private LocalDateTime createdAt;
 

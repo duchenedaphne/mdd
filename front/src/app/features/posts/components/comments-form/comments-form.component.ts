@@ -6,6 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 import { CommentApiService } from '../../services/comment-api.service';
 import { Comment } from '../../../posts/interfaces/comment.interface';
+import { User } from 'src/app/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
+import { Post } from '../../interfaces/post.interface';
+import { PostApiService } from '../../services/post-api.service';
 
 @Component({
     selector: 'app-comments-form',
@@ -14,31 +18,53 @@ import { Comment } from '../../../posts/interfaces/comment.interface';
 })
 export class CommentsFormComponent implements OnInit {
 
-    public commentForm: FormGroup | undefined;    
-    public userId: number;
+    public commentForm: FormGroup | undefined;
+    public user: User | undefined;
+    public post: Post | undefined;
     public postId: string;
 
+    public userName: string | undefined;
+    public postTitle: string | undefined;
+    
     constructor(
         private fb: FormBuilder,
         private matSnackBar: MatSnackBar,
         private commentApiService: CommentApiService,
+        private postApiService: PostApiService,
+        private userService: UserService,
         private sessionService: SessionService,
         private route: ActivatedRoute,
         private router: Router
     ) {
-        this.userId = this.sessionService.sessionInformation!.id;
         this.postId = this.route.snapshot.paramMap.get('id')!;
     }
 
     public ngOnInit(): void {
+
+        this.userService
+            .getById(this.sessionService.sessionInformation!.id.toString())
+            .subscribe((user: User) => { 
+                this.user = user;
+                this.userName = user.userName;
+            });
+
+        this.postApiService
+            .detail(this.postId)
+            .subscribe((post:Post) => {
+                this.post = post;
+                this.postTitle = post.title;
+            });
+
         this.initForm();
     }
 
     public submit(): void {
 
         const comment = this.commentForm?.value as Comment;
-        comment.post_id = parseInt(this.postId);
-        comment.user_id = this.userId;
+        if (this.postTitle)
+            comment.post_title = this.postTitle;
+        if (this.userName)
+            comment.user_name = this.userName;
 
         this.commentApiService
             .create(comment)

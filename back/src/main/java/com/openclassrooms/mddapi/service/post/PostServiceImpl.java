@@ -96,7 +96,7 @@ public class PostServiceImpl implements PostService {
         User userApp = new User();
         try {
             userApp = userService.findByEmail(userDetails.getUsername());
-            postDto.setUser_id(userApp.getId()); 
+            postDto.setUser_name(userApp.getUserName()); 
 
             post = create(this.postMapper.toEntity(postDto));
 

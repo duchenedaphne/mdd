@@ -88,7 +88,7 @@ public class CommentServiceImpl implements CommentService {
         User userApp = new User();
         try {
             userApp = userService.findByEmail(userDetails.getUsername());
-            commentDto.setUser_id(userApp.getId()); 
+            commentDto.setUser_name(userApp.getUserName()); 
 
             comment = create(this.commentMapper.toEntity(commentDto));
 

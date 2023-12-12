@@ -26,20 +26,12 @@ export class DetailComponent implements OnInit {
     public updatedAt: Date | undefined;
 
     public postId: string;
-    public userId: string;
-    public isAuthor = false;
 
     constructor(
         private route: ActivatedRoute,
-        private sessionService: SessionService,
-        private postApiService: PostApiService,
-        private topicApiService: TopicApiService,
-        private userService: UserService,
-        private matSnackBar: MatSnackBar,
-        private router: Router
+        private postApiService: PostApiService
     ) {
         this.postId = this.route.snapshot.paramMap.get('id')!;
-        this.userId = this.sessionService.sessionInformation!.id.toString();
     }
 
     public ngOnInit(): void {
@@ -50,30 +42,10 @@ export class DetailComponent implements OnInit {
                 this.post = post;
                 this.title = post.title;
                 this.content = post.content;
+                this.author = post.user_name;
+                this.topic = post.topic_name;
                 this.createdAt = post.createdAt;
                 this.updatedAt = post.updatedAt;
-
-                if (this.userId == post.user_id.toString())
-                this.isAuthor = true;
-
-                this.userService
-                    .getById(post.user_id.toString())
-                    .subscribe((user: User) => this.author = user.userName);
-
-                this.topicApiService
-                    .detail(post.topic_id.toString())
-                    .subscribe((topic: Topic) => this.topic = topic.name);
             });
-    }
-
-    public delete(): void {
-        
-        this.postApiService
-            .delete(this.postId)
-            .subscribe((_: any) => {
-                this.matSnackBar.open('Article supprimé !', 'Close', { duration: 3000 });
-                this.router.navigate(['/articles']);
-                }
-            );
     }
 }

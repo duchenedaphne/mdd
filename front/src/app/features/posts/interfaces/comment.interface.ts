@@ -3,8 +3,8 @@ export interface Comment {
     
     id?: number;
     content: string;
-    post_id: number;
-    user_id: number;
+    post_title: string;
+    user_name: string;
     createdAt?: Date;
     updatedAt?: Date;
 }

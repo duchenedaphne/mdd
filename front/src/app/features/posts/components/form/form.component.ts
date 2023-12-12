@@ -7,6 +7,8 @@ import { SessionService } from 'src/app/services/session.service';
 import { Post } from '../../interfaces/post.interface';
 import { PostApiService } from '../../services/post-api.service';
 import { TopicApiService } from 'src/app/features/topics/services/topic-api.service';
+import { User } from 'src/app/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
     selector: 'app-form',
@@ -17,27 +19,37 @@ export class FormComponent implements OnInit {
 
     public postForm: FormGroup | undefined;
     public topics$ = this.topicApiService.all();
-    public userId: number;
+    public user: User | undefined;
+    public userName: string | undefined;
 
     constructor(
         private fb: FormBuilder,
         private matSnackBar: MatSnackBar,
         private postApiService: PostApiService,
+        private userService: UserService,
         private sessionService: SessionService,
         private topicApiService: TopicApiService,
         private router: Router
     ) {
-        this.userId = this.sessionService.sessionInformation!.id;
     }
 
-    public ngOnInit(): void {    
+    public ngOnInit(): void {
+
+        this.userService
+            .getById(this.sessionService.sessionInformation!.id.toString())
+            .subscribe((user: User) => { 
+                this.user = user;
+                this.userName = user.userName;
+            });
+
         this.initForm();
     }
 
     public submit(): void {
 
         const post = this.postForm?.value as Post;
-        post.user_id = this.userId;
+        if(this.userName)
+            post.user_name = this.userName;
 
         this.postApiService
             .create(post)
@@ -48,7 +60,7 @@ export class FormComponent implements OnInit {
         
         this.postForm = this.fb.group({
             topic_id: [
-                post ? post.topic_id : '',
+                post ? post.topic_name : '',
                 [Validators.required]
             ],
             title: [

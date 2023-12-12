@@ -26,8 +26,8 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     @Mappings({
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
-            @Mapping(target = "author", expression = "java(postDto.getUser_id() != null ? this.userRepository.findById(Long.valueOf(postDto.getUser_id())).orElse(null) : null)"),
-            @Mapping(target = "topic", expression = "java(postDto.getTopic_id() != null ? this.topicRepository.findById(Long.valueOf(postDto.getTopic_id())).orElse(null) : null)"),
+            @Mapping(target = "author", expression = "java(postDto.getUser_name() != null ? this.userRepository.findByUserName(postDto.getUser_name()).orElse(null) : null)"),
+            @Mapping(target = "topic", expression = "java(postDto.getTopic_name() != null ? this.topicRepository.findByName(postDto.getTopic_name()).orElse(null) : null)"),
     })
     public abstract Post toEntity(PostDto postDto);
 
@@ -35,8 +35,8 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     @Mappings({
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
-            @Mapping(source = "post.author.id", target = "user_id"),
-            @Mapping(source = "post.topic.id", target = "topic_id"),
+            @Mapping(source = "post.author.userName", target = "user_name"),
+            @Mapping(source = "post.topic.name", target = "topic_name"),
     })
     public abstract PostDto toDto(Post post);
 }

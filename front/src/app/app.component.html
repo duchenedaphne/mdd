@@ -3,21 +3,21 @@
     <router-outlet></router-outlet>
 </ng-template>
 
-<div *ngIf="$isLogged() | async; else notLogged">
+<div *ngIf="$isLogged() | async; else notLogged" class="app">
 
-    <mat-toolbar color="lighter" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-toolbar color="lighter" fxLayout="row" fxLayoutAlign="space-between center" class="toolbar-div">
 
-            <img src="/assets/logo_p6.png" alt="logo" />
+        <img src="/assets/logo_p6.png" alt="logo" />
 
-            <div>
-                <span routerLink="articles" class="link">Articles</span>
+        <div>
+            <span routerLink="articles" class="link">Articles</span>
 
-                <span routerLink="themes" class="link">Thèmes</span>
+            <span routerLink="themes" class="link">Thèmes</span>
 
-                <span routerLink="me" class="link">
-                    <mat-icon>account_circle</mat-icon>
-                </span>
-            </div>
+            <span routerLink="me" class="link">
+                <mat-icon>account_circle</mat-icon>
+            </span>
+        </div>
         
     </mat-toolbar>
 

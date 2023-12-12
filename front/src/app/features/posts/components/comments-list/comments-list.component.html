@@ -3,10 +3,9 @@
     <div class="items mt2">
         <mat-card class="item card" *ngFor="let comment of (comments$ | async)" fxFlex>
 
-            {{ fetchAuthor(comment.user_id) }}
             <mat-card-header>
                 <mat-card-title>
-                    <p>{{ author }}</p>
+                    <p>{{ comment.user_name }}</p>
                 </mat-card-title>>
             </mat-card-header>
 

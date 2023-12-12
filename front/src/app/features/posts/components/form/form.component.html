@@ -15,7 +15,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Thème</mat-label>                
                     <mat-select ngDefaultControl formControlName="topic_id">
-                        <mat-option *ngFor="let topic of topics$ | async" [value]="topic.id">{{topic.name}}</mat-option>
+                        <mat-option *ngFor="let topic of topics$ | async" [value]="topic.name">{{topic.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 

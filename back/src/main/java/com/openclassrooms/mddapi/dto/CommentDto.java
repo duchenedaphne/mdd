@@ -21,9 +21,9 @@ public class CommentDto {
     @NotBlank
     private String content;
 
-    private Long post_id;
+    private String post_title;
 
-    private Long user_id;
+    private String user_name;
 
     private LocalDateTime createdAt;
 

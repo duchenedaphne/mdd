@@ -7,14 +7,25 @@
     justify-content: space-between;
 }
 
-mat-toolbar img {
+img {
     width: 7rem;
 }
 
-.link {
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-    margin-left: 10px;
-}  
+// .link {
+//     cursor: pointer;
+//     font-size: 16px;
+//     text-decoration: none;
+//     margin-left: 10px;
+// }  
 
+.app {
+    .link {
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .link + .link {
+        margin-left: 10px;
+    }
+}
