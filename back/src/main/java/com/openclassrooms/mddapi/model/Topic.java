@@ -31,7 +31,7 @@ public class Topic {
 	@Column(name = "topic_id")
 	private Long id;
 	
-	@Column(nullable = false, name = "topic_name")
+	@Column(nullable = false)
 	private String name;
 	
 	@Column(nullable = false)

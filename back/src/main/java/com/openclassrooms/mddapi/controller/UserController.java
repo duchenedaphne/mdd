@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.payload.request.SignupRequest;
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import javax.validation.Valid;
@@ -24,8 +24,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody SignupRequest signUpRequest) {
-        return userService.update_account(id, signUpRequest);
+    public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody UserDto userDto) {
+        return userService.update_account(id, userDto);
     }
 
     @DeleteMapping("/{id}")

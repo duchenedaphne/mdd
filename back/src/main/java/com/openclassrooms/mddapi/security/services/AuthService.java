@@ -72,8 +72,8 @@ public class AuthService {
                 new JwtResponse(
                                 jwt,
                                 userDetails.getId(),
-                                userDetails.getUsername(),
-                                userDetails.getTheUserName()
+                                userDetails.getTheUserName(),
+                                userDetails.getUsername()
                 )
             );
         } catch (HttpStatusCodeException exception) {

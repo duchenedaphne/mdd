@@ -12,13 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 
+import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.model.User;
-import com.openclassrooms.mddapi.payload.request.SignupRequest;
 import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -32,8 +31,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Autowired
     private final UserMapper userMapper;
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
 
     @Override
     public User create(User user) throws Exception {
@@ -133,9 +130,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public ResponseEntity<?> update_account(String id, SignupRequest signUpRequest) {
+    public ResponseEntity<?> update_account(String id, UserDto userDto) {
 
-        Matcher matcher = emailFormatChecker(signUpRequest.getEmail());
+        Matcher matcher = emailFormatChecker(userDto.getEmail());
         if (matcher.matches() == false)
             return ResponseEntity
                     .badRequest()
@@ -150,25 +147,18 @@ public class UserServiceImpl implements UserService {
             if (user == null)
                 return ResponseEntity.notFound().build();
 
-            userUpdated.setUserName(signUpRequest.getUserName());
             userUpdated.setPassword(user.getPassword());
             userUpdated.setCreatedAt(user.getCreatedAt());
             userUpdated.setUpdatedAt(LocalDateTime.now());
-            userUpdated.setEmail(user.getEmail());
-
-            // String responseMessage = userUpdated.getEmail() + " = " + user.getEmail();
-
-            // if (String.valueOf(userUpdated.getEmail()) != String.valueOf(user.getEmail()))
-            //     return ResponseEntity
-            //         .badRequest()
-            //         .body(new MessageResponse(responseMessage));
+            userUpdated.setUserName(userDto.getUserName());
+            userUpdated.setEmail(userDto.getEmail());
+                
+            if (!userDto.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(userDto.getEmail()))
+                return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Un autre compte existe déjà avec cette adresse email !"));
 
             update(Long.valueOf(id), userUpdated);
-
-            // else if (userRepository.existsByEmail(userUpdated.getEmail()))
-            //         return ResponseEntity
-            //             .badRequest()
-            //             .body(new MessageResponse("Un compte existe déjà avec cette adresse email !"));
                         
         } catch (HttpStatusCodeException exception) {
             status = exception.getStatusCode();

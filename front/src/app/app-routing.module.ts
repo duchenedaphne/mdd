@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 const routes: Routes = [
 
   { path: '',
+    title: 'Accueil',
     component: HomeComponent
   },
   {
@@ -31,11 +32,13 @@ const routes: Routes = [
   },
   {
     path: 'me',
+    title: 'Profil',
     canActivate: [AuthGuard],
     component: MeComponent
   },
   { 
     path: '404', 
+    title: '404',
     component: NotFoundComponent 
   },
   { 

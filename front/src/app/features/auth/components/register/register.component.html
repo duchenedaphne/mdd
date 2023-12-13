@@ -11,7 +11,7 @@
     <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
 
         <div class="inputField">
-            <input class="mat-input" matInput placeholder="" formControlName="userName">
+            <input type="text" class="mat-input" matInput placeholder="" formControlName="userName">
 
             <span class="fakePlaceholder">
                 Nom d'utilisateur
@@ -19,7 +19,7 @@
         </div>
             
         <div class="inputField">
-            <input class="mat-input" matInput placeholder="" formControlName="email">
+            <input type="email" class="mat-input" matInput placeholder="" formControlName="email">
 
             <span class="fakePlaceholder">
                 Adresse e-mail
@@ -27,7 +27,7 @@
         </div>
             
         <div class="inputField">
-            <input class="mat-input" matInput placeholder="" formControlName="password">
+            <input type="password" class="mat-input" matInput placeholder="" formControlName="password">
 
             <span class="fakePlaceholder">
                 Mot de passe

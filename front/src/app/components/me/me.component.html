@@ -2,17 +2,17 @@
 <div class="profil">
     <h2>Profil utilisateur</h2>
 
-    <form class="profil-form" [formGroup]="form" (ngSubmit)="submit()">
+    <form class="profil-form" [formGroup]="meForm" (ngSubmit)="submit()">
 
         <div class="inputField">
-            <input class="mat-input" matInput placeholder="Nom d'utilisateur" formControlName="userName" value={{ userName }}>
+            <input class="mat-input" matInput type="text" name="" id="" formControlName="userName">
         </div>
             
         <div class="inputField">
-            <input class="mat-input" matInput placeholder="Adresse e-mail" formControlName="email" value={{ email }}>
+            <input class="mat-input" matInput type="email" formControlName="email">
         </div>
 
-        <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Sauvegarder</button>
+        <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="meForm.invalid">Sauvegarder</button>
 
         <span *ngIf="onError" class="error ml2">Erreur</span>
     </form>

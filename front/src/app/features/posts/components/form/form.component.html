@@ -3,9 +3,11 @@
     <mat-card>
         <mat-card-title>
             <div>
-            <button mat-icon-button routerLink="articles">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
+                <button mat-icon-button routerLink="/articles">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <h1>Publier un article</h1>
             </div>
         </mat-card-title>
 
@@ -14,14 +16,14 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label>Thème</mat-label>                
-                    <mat-select ngDefaultControl formControlName="topic_id">
+                    <mat-select ngDefaultControl formControlName="topic_name">
                         <mat-option *ngFor="let topic of topics$ | async" [value]="topic.name">{{topic.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="" fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
                     <mat-label>Titre</mat-label>
-                    <input matInput formControlName="title">
+                    <input type="text" matInput formControlName="title">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex>

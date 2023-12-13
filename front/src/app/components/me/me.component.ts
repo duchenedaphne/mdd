@@ -17,19 +17,14 @@ import { TopicApiService } from 'src/app/features/topics/services/topic-api.serv
 })
 export class MeComponent implements OnInit {
 
-    public topics$: Observable<Topic[]>; 
+    public topics$: Observable<Topic[]> | undefined; 
     public isSubscribe = true; 
-
-    public user: User | undefined;
-    public userName: string | undefined;
-    public email: string | undefined;
-    public createdAt: Date | undefined;
-    public updatedAt: Date | undefined;
+    
+    public userName: string;
+    public email: string;
     public userId: number | undefined;
-  
-    public onError = false;
-
-    public form = this.fb.group({
+    
+    public meForm = this.fb.group({
         email: [
             '',
             [
@@ -46,6 +41,7 @@ export class MeComponent implements OnInit {
             ]
         ]
     });
+    public onError = false;
 
     constructor(
         private router: Router,
@@ -54,33 +50,32 @@ export class MeComponent implements OnInit {
         private userService: UserService,
         private topicApiService: TopicApiService,
         private fb: FormBuilder
-    ) {   
+    ) { 
+        this.userName = this.sessionService.sessionInformation!.userName;
+        this.email = this.sessionService.sessionInformation!.email; 
+        
+        this.meForm.setValue({
+            email: this.email,
+            userName: this.userName
+        });
+    }
+
+    ngOnInit(): void {
         this.userId = this.sessionService.sessionInformation!.id;
         this.topics$ = this.topicApiService.allByUserId(this.userId.toString());
     }
 
-    ngOnInit(): void {
-        this.userService
-            .getById(this.sessionService.sessionInformation!.id.toString())
-            .subscribe((user: User) =>{ 
-                    this.user = user;
-                    this.userName = user.userName;
-                    this.email = user.email;
-                    this.createdAt = user.createdAt;
-                    this.updatedAt = user.updatedAt;
-                }
-            );
-    }
-
     public submit(): void {
-        const userUpdated = this.form.value as User;
+        
+        const userUpdated = this.meForm.value as User;
+        this.userName = userUpdated.userName;
         
         this.userService
             .update(this.sessionService.sessionInformation!.id.toString(), userUpdated)
             .subscribe({
                 next: (_: void) => {
                     this.matSnackBar.open("Votre compte a été modifié !", 'Close', { duration: 3000 }); 
-                    this.router.navigate(['/me']);
+                    this.router.navigate(['/articles']);
                 },
                 error: _ => this.onError = true,
             });
