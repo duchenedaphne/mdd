@@ -7,19 +7,40 @@
 
     <mat-toolbar color="lighter" fxLayout="row" fxLayoutAlign="space-between center" class="toolbar-div">
 
-        <img src="/assets/logo_p6.png" alt="logo" />
+        <img routerLink="articles" src="/assets/logo_p6.png" alt="logo" />
 
-        <div>
-            <span routerLink="articles" class="link">Articles</span>
+        <div class="links">
+            <span routerLink="articles" class="link" routerLinkActive="active" 
+            [routerLinkActiveOptions]={exact:true}>Articles</span>
 
-            <span routerLink="themes" class="link">Thèmes</span>
+            <span routerLink="themes" class="link" routerLinkActive="active">Thèmes</span>
 
-            <span routerLink="me" class="link">
+            <span routerLink="me" class="link" routerLinkActive="active">
                 <mat-icon>account_circle</mat-icon>
             </span>
         </div>
+
+        <div class="menu" (click)="open()">
+            <mat-icon>menu</mat-icon>
+        </div>
         
     </mat-toolbar>
+
+    <div *ngIf="$isMenu" class="side-menu">
+        <div class="back-menu" (click)="close()"><mat-icon>keyboard_arrow_left</mat-icon></div>
+
+        <div class="links-menu">
+            <div class="p-menu">
+                <p class="link-menu" (click)="articles()">Articles</p>
+
+                <p class="link-menu" (click)="themes()">Thèmes</p>
+            </div>
+            
+            <p class="link-menu profil-icon" (click)="me()">
+                <mat-icon [inline]="true">account_circle</mat-icon>
+            </p>
+        </div>
+    </div>
 
     <router-outlet></router-outlet>
 </div>

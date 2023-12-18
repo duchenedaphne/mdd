@@ -1,18 +1,11 @@
 
-<div class="list">
-    <div class="items mt2">
-        <mat-card class="item card" *ngFor="let comment of (comments$ | async)" fxFlex>
+<div class="items">
+    <div class="item" *ngFor="let comment of (comments$ | async)" fxFlex>
+        <h3>{{ comment.user_name }}</h3>
 
-            <mat-card-header>
-                <mat-card-title>
-                    <p>{{ comment.user_name }}</p>
-                </mat-card-title>>
-            </mat-card-header>
-
-            <mat-card-content>
-                <p>{{ comment.content }}</p>
-            </mat-card-content>            
-        </mat-card>
+        <div class="content">
+            <p>{{ comment.content }}</p>
+        </div>            
     </div>
 </div>
   

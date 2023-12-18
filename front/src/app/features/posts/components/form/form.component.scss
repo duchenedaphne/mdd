@@ -1,0 +1,53 @@
+
+.arrow-left {
+    font-weight: 900;
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-left: 1.5rem;
+    cursor: pointer;
+}
+h2 {
+    text-align: center;
+}
+.create-article {
+    margin-top: 30px;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 30rem;
+}
+.article-form {
+    display: flex;
+    flex-direction: column;
+}
+.mat-input {
+    margin: 1rem 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 2rem;
+    width: 100%;
+}
+.textarea {
+    margin: 1rem 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 5rem;
+    width: 100%;
+    resize: none;
+}
+input::placeholder, textarea::placeholder {
+    color: black;
+}
+
+.btn-submit {
+    margin: auto;
+    width: 50%;
+    border-radius: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .create-article {
+        width: 90%;
+    }
+}
+

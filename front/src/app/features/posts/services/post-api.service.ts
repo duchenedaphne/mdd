@@ -18,6 +18,10 @@ export class PostApiService {
     return this.httpClient.get<Post[]>(this.pathService);
   }
 
+  public allByTopicId(id: string): Observable<Post[]> {
+    return this.httpClient.get<Post[]>(`${this.pathService}/topic/${id}`);
+  }
+
   public create(post: Post): Observable<Post> {
     return this.httpClient.post<Post>(this.pathService, post);
   }

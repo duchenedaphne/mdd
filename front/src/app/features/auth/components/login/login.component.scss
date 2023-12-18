@@ -2,7 +2,6 @@
 mat-toolbar {
     background-color: white;
     border-bottom: 1px solid black;
-    margin-bottom: 1rem;
 }
 
 img {
@@ -12,11 +11,16 @@ img {
 .arrow-left {
     font-weight: 900;
     font-size: 2rem;
+    margin-top: 1rem;
     margin-left: 1.5rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
     cursor: pointer;
 }
 h2 {
     text-align: center;
+    margin-top: 0;
+    padding-top: 0;
 }
 .login {
     margin-top: 30px;
@@ -51,4 +55,25 @@ h2 {
     margin: auto;
     width: 50%;
     border-radius: 0.5rem;
+}
+
+.logo {
+    display: none;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .toolbar {
+        display: none;
+    }
+    .logo {
+        display: block;
+        width: 100%;
+    }
+    .login {
+        width: 90%;
+    }
 }

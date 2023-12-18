@@ -68,17 +68,20 @@ export class MeComponent implements OnInit {
     public submit(): void {
         
         const userUpdated = this.meForm.value as User;
-        this.userName = userUpdated.userName;
         
-        this.userService
-            .update(this.sessionService.sessionInformation!.id.toString(), userUpdated)
-            .subscribe({
-                next: (_: void) => {
-                    this.matSnackBar.open("Votre compte a été modifié !", 'Close', { duration: 3000 }); 
-                    this.router.navigate(['/articles']);
-                },
-                error: _ => this.onError = true,
-            });
+        if (userUpdated.email != this.email || userUpdated.userName != this.userName)
+            this.userService
+                .update(this.sessionService.sessionInformation!.id.toString(), userUpdated)
+                .subscribe({
+                    next: (_: void) => {
+                        this.matSnackBar.open("Votre compte a été modifié, veuillez vous reconnecter !", 'Close', { duration: 3000 }); 
+                        this.sessionService.logOut();
+                        this.router.navigate(['/fr/login']);
+                    },
+                    error: _ => this.onError = true,
+                });
+        else
+            alert('aucune modification détectée.')
     }
 
     public logout(): void {
@@ -90,6 +93,8 @@ export class MeComponent implements OnInit {
       this.topicApiService
         .unSubscribe(id.toString(), this.sessionService.sessionInformation!.id.toString())
         .subscribe(_ => this.fetchTopic(id));
+
+        this.router.navigate(['articles']);
     }
 
     private fetchTopic(id:number): void {

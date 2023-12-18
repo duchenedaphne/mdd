@@ -1,8 +1,8 @@
 
 <div class="detail-page">
-    <button mat-icon-button routerLink="/articles">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
+    <div class="arrow-left">
+        <span routerLink="/articles">&larr;</span>
+    </div>
 
     <mat-card *ngIf="post" class="article">
         <mat-card-title>
@@ -10,15 +10,15 @@
         </mat-card-title>
 
         <mat-card-subtitle class="subtitle">
-            <p>Date: {{ createdAt| date: 'longDate' }}</p>
-            <p>Auteur: {{ author }}</p>
+            <div class="startp">
+                <p>Date: {{ createdAt| date: 'longDate' }}</p>
+                <p>Auteur: {{ author | titlecase }}</p>
+            </div>            
             <p>Thème: {{ topic }}</p>
         </mat-card-subtitle>
 
         <mat-card-content>
-            <div class="description">
-                <p>Contenu: {{ content }} <br></p>
-            </div>
+            <p>Contenu: {{ content }} <br></p>
         </mat-card-content>
 
         <hr>

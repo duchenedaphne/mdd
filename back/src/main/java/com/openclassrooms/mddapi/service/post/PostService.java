@@ -10,6 +10,8 @@ public interface PostService {
 
     public List<Post> findAll() throws Exception;
 
+    public List<Post> findAllByTopicId(Long id) throws Exception;
+
     public Post create(Post post) throws Exception;
 
     public Post findById(Long id) throws Exception;

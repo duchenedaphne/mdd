@@ -1,11 +1,16 @@
 
-<mat-toolbar>
+<mat-toolbar class="toolbar">
     <img src="/assets/logo_p6.png" alt="logo" />
 </mat-toolbar>
 
-<span class="arrow-left" (click)=back()>&larr;</span>
+<div class="arrow-left">
+    <span (click)=back()>&larr;</span>
+</div>
 
 <div class="register">
+
+    <img class="logo" src="/assets/logo_p6.png" alt="logo" />
+
     <h2>Inscription</h2>
 
     <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">

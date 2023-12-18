@@ -24,6 +24,11 @@ public class PostController {
         return postService.find_all();
     }
 
+    @GetMapping("/topic/{id}")
+    public ResponseEntity<?> findAllByTopicId(@PathVariable("id") String id) {
+        return postService.find_all_by_topic_id(id);
+    }
+
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody PostDto postDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.create_post(postDto, userDetails);

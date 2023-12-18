@@ -21,7 +21,7 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100vw;
+  width: 60%;
   max-width: 50rem;
 }
 
@@ -31,11 +31,11 @@ img {
   border-color: black;
   border-width: 1px;
   border-style: solid;
-  width: 10rem;
+  width: 45%;
   font-size: 1.2rem;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
   img {
     width: 70vw;
   }
@@ -44,6 +44,10 @@ img {
     margin: 0, auto;
     align-items: center;
     height: 10rem;
+    width: 100%;
+  }
+  .start-btn {
+    width: 50%;
   }
 }
 

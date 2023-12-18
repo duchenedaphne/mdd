@@ -19,18 +19,15 @@ export class LoginComponent {
 
     public form = this.fb.group({
         email: [
-        '',
-        [
-            Validators.required,
-            Validators.email
-        ]
+            '',
+            [Validators.required]
         ],
         password: [
-        '',
-        [
-            Validators.required,
-            Validators.min(3)
-        ]
+            '',
+            [
+                Validators.required,
+                Validators.min(3)
+            ]
         ]
     });
 

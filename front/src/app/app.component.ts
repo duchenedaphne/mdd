@@ -13,6 +13,8 @@ import { SessionService } from './services/session.service';
 })
 export class AppComponent {
 
+    public $isMenu = false;
+
     constructor(
         private authService: AuthService,
         private router: Router,
@@ -21,5 +23,28 @@ export class AppComponent {
 
     public $isLogged(): Observable<boolean> {
         return this.sessionService.$isLogged();
+    }
+
+    public open(): void {
+        this.$isMenu = true;
+    }
+
+    public close(): void {
+        this.$isMenu = false;
+    }
+
+    public articles(): void {
+        this.router.navigate(['articles']);
+        this.$isMenu = false;
+    }
+
+    public themes(): void {
+        this.router.navigate(['themes']);
+        this.$isMenu = false;
+    }
+
+    public me(): void {
+        this.router.navigate(['me']);
+        this.$isMenu = false;
     }
 }

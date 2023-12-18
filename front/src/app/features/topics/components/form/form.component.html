@@ -1,37 +1,27 @@
 
 <div class="create m3">
-    <mat-card>
-        <mat-card-title>
-            <div>
-                <button mat-icon-button routerLink="/themes">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
+    <div class="arrow-left">
+        <span routerLink="/themes">&larr;</span>
+    </div>
 
-                <h1>Créer un thème</h1>
+    <div class="create-theme" *ngIf="topicForm">
+        <h2>Créer un nouveau thème</h2>
+        
+        <form class="mt2 theme-form" [formGroup]="topicForm" (ngSubmit)="submit()">
+
+            <div class='inputField'>
+                <input class="mat-input" type="text" placeholder="Nom du thème" matInput formControlName="name">
             </div>
-        </mat-card-title>
 
-        <mat-card-content *ngIf="topicForm">
-            <form class="mt2" [formGroup]="topicForm" (ngSubmit)="submit()">
+            <div class='inputField'>
+                <textarea class="textarea" placeholder="Description du thème" matInput rows="8" formControlName="description"></textarea>
+            </div>
+            
+            <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="topicForm.invalid">
+                Enregistrer
+            </button>
 
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Nom</mat-label>
-                    <input type="text" matInput formControlName="name">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Description</mat-label>
-                    <textarea matInput rows="8" formControlName="description"></textarea>
-                </mat-form-field>
-
-                <div>
-                    <button mat-raised-button color="primary" type="submit" [disabled]="topicForm.invalid">
-                        Enregistrer
-                    </button>
-                </div>
-
-            </form>
-        </mat-card-content>
-    </mat-card>
+        </form>
+    </div>
 </div>
   

@@ -17,38 +17,34 @@
         <span *ngIf="onError" class="error ml2">Erreur</span>
     </form>
 
-    <p color="warn" (click)="logout()" class="link">Se déconnecter</p>
+    <p class="logout"> 
+        <span class="link-logout" (click)="logout()">Se déconnecter</span> 
+    </p>
 </div>
 
 <hr>
 
-<div class="m3 list">
-    <div>
-        <h1>Abonnements</h1>
-    </div>
-    <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
-        <mat-card-header>
+<div class="list">
+    <h2>Abonnements</h2>
+
+    <div class="items">
+        <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
             <mat-card-title>
                 <h3>{{ topic.name }}</h3>
             </mat-card-title>
-        </mat-card-header>
 
-        <mat-card-content>
-            <div class="description">            
+            <mat-card-content>
                 <p>Description: {{ topic.description }}</p>
-                <br>
-            </div>
-        </mat-card-content>
-            
-        <mat-card-actions>
-            <div class="my2">
-                <button *ngIf="topic.id" mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
-                    <mat-icon>person_remove</mat-icon>
-                    <span class="ml1"> Se désabonner</span>
+            </mat-card-content>
+                
+            <mat-card-actions class="btns-action">
+                <button class="btn-unsubscribe" *ngIf="topic.id" mat-raised-button color="warn" (click)="unSubscribe(topic.id)">
+                    Se désabonner
                 </button>
-            </div>
-        </mat-card-actions>
+            </mat-card-actions>
 
-    </mat-card>
+        </mat-card>
+    </div>
+    
 </div>
   

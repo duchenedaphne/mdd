@@ -1,21 +1,14 @@
 
-<div class="create m3">
-    <mat-card>
-        <mat-card-content *ngIf="commentForm">
-            <form class="mt2" [formGroup]="commentForm" (ngSubmit)="submit()">
+<div class="create-comment" *ngIf="commentForm">
+    <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submit()">  
 
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Contenu</mat-label>
-                    <textarea matInput rows="8" formControlName="content"></textarea>
-                </mat-form-field>
-
-                <div>
-                    <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">
-                        <mat-icon>send</mat-icon>
-                    </button>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+        <div class='inputField'>
+            <textarea class="textarea" placeholder="Écrivez ici votre commentaire" matInput rows="8" formControlName="content"></textarea>
+        </div>
+        
+        <button class="btn-submit" mat-raised-button color="#fff" type="submit" [disabled]="commentForm.invalid">
+            <img src="/assets/Paper-plane-icon-vector-09.svg" alt="send" />
+        </button>
+    </form>
 </div>
   

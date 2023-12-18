@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.PostRepository;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
+import com.openclassrooms.mddapi.service.topic.TopicServiceImpl;
 import com.openclassrooms.mddapi.service.user.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -29,11 +31,24 @@ public class PostServiceImpl implements PostService {
     private final PostMapper postMapper;
     @Autowired
     private final UserServiceImpl userService;
+    @Autowired
+    private final TopicServiceImpl topicService;
 
 	@Override
 	public List<Post> getPosts() {
 		return postRepository.findAll();
 	}
+
+	@Override
+	public List<Post> findAll() throws Exception {
+		return postRepository.findAll();
+	}
+
+    @Override
+    public List<Post> findAllByTopicId(Long id) throws Exception {
+        Topic topic = topicService.findById(id);
+        return postRepository.findAllByTopic(topic);
+    }
 
 	@Override
 	public Post create(Post post) throws Exception {
@@ -51,9 +66,30 @@ public class PostServiceImpl implements PostService {
 		return "L'article a bien été supprimé.";
 	}
 
-	@Override
-	public List<Post> findAll() throws Exception {
-		return postRepository.findAll();
+	public ResponseEntity<?> find_all() {
+		
+        List<Post> posts;
+        try {
+            posts = findAll();
+            return ResponseEntity.ok().body(this.postMapper.toDto(posts));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+	}
+
+	public ResponseEntity<?> find_all_by_topic_id(String postId) {
+
+        List<Post> posts;
+        try {
+            posts = findAllByTopicId(Long.valueOf(postId));
+            return ResponseEntity.ok().body(this.postMapper.toDto(posts));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
 	}
 	
 	public ResponseEntity<?> find_by_id(String id) {
@@ -68,19 +104,6 @@ public class PostServiceImpl implements PostService {
 
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-	}
-
-	public ResponseEntity<?> find_all() {
-		
-        List<Post> posts;
-        try {
-            posts = findAll();
-            return ResponseEntity.ok().body(this.postMapper.toDto(posts));
-            
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

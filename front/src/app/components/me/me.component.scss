@@ -38,3 +38,51 @@ h2 {
     border-radius: 0.5rem;
 }
 
+.logout {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+    color: red;
+}
+.link-logout {
+    cursor: pointer;
+}
+
+.list {
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.items {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item {
+    width: 50%;
+    background-color: rgb(245, 245, 245);
+}
+
+.btns-action {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 600px) {
+    .items {
+        flex-direction: column;
+        align-items: center;
+        .item {
+            width: 90%;
+        }
+    }
+}
+

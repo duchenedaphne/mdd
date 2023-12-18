@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CommentApiService } from 'src/app/features/posts/services/comment-api.service';
 import { Comment } from '../../interfaces/comment.interface';
@@ -13,7 +13,6 @@ import { Comment } from '../../interfaces/comment.interface';
 export class CommentsListComponent implements OnInit {
 
     public comments$: Observable<Comment[]>;
-    public comment: Comment | undefined;
     public postId: string;
 
     constructor(

@@ -1,43 +1,33 @@
 
-<div class="create m3">
-    <mat-card>
-        <mat-card-title>
-            <div>
-                <button mat-icon-button routerLink="/articles">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
+<div class="create">
+    <div class="arrow-left">
+        <span routerLink="/articles">&larr;</span>
+    </div>
 
-                <h1>Publier un article</h1>
+    <div class="create-article" *ngIf="postForm">
+        <h2>Créer un nouvel article</h2>
+        
+        <form class="article-form" [formGroup]="postForm" (ngSubmit)="submit()">
+
+            <div class='inputField'>         
+                <mat-select class="mat-input" placeholder="Sélectionner un thème" formControlName="topic_name">
+                    <mat-option *ngFor="let topic of topics$ | async" [value]="topic.name">{{topic.name}}</mat-option>
+                </mat-select>
             </div>
-        </mat-card-title>
 
-        <mat-card-content *ngIf="postForm">
-            <form class="mt2" [formGroup]="postForm" (ngSubmit)="submit()">
+            <div class='inputField'>
+                <input class="mat-input" type="text" placeholder="Titre de l'article" matInput formControlName="title">
+            </div>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Thème</mat-label>                
-                    <mat-select ngDefaultControl formControlName="topic_name">
-                        <mat-option *ngFor="let topic of topics$ | async" [value]="topic.name">{{topic.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class='inputField'>
+                <textarea class="textarea" placeholder="Contenu de l'article" matInput rows="8" formControlName="content"></textarea>
+            </div>
 
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Titre</mat-label>
-                    <input type="text" matInput formControlName="title">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex>
-                    <mat-label>Contenu</mat-label>
-                    <textarea matInput rows="8" formControlName="content"></textarea>
-                </mat-form-field>
-
-                <div>
-                    <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
-                        Créer
-                    </button>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+            <button class="btn-submit" mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+                Créer
+            </button>
+                
+        </form>
+    </div>
 </div>
   
