@@ -18,6 +18,7 @@ export class ListComponent implements OnInit {
     public posts$: Observable<Post[]> | undefined; 
     public posts: Post[] | undefined; 
     public userId;
+    public isOrder = false;
 
     constructor(
         private sessionService: SessionService,
@@ -46,5 +47,9 @@ export class ListComponent implements OnInit {
                 });
             }
         )
+    }
+
+    public order(): void {
+        this.isOrder = !this.isOrder;
     }
 }
