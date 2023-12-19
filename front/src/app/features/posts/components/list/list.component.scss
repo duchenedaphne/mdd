@@ -8,14 +8,15 @@
 
 .items {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-top: 1rem;
-}
-
-.item {
-    cursor: pointer;
-    width: 50%;
-    background-color: rgb(245, 245, 245);
+    .item {
+        cursor: pointer;
+        width: 45%;
+        margin-bottom: 1rem;
+        background-color: rgb(245, 245, 245);
+    }
 }
 
 .header-create {

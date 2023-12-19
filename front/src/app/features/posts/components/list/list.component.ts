@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
 
     public topics$: Observable<Topic[]>;
     public posts$: Observable<Post[]> | undefined; 
-    public posts: Post[] | undefined; 
+    public posts: Post[] = []; 
     public userId;
     public isOrder = false;
 

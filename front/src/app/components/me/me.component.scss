@@ -58,16 +58,17 @@ h3 {
 
 .items {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-top: 1rem;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-}
-
-.item {
-    width: 50%;
-    background-color: rgb(245, 245, 245);
+    .item {
+        width: 45%;
+        margin-bottom: 1rem;
+        background-color: rgb(245, 245, 245);
+    }
 }
 
 .btns-action {
