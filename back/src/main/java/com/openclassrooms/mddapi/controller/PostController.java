@@ -17,28 +17,48 @@ import javax.validation.Valid;
 @RequestMapping("/api/post")
 public class PostController {
 
-    private final PostServiceImpl postService;
+    private final PostServiceImpl postService;    
     
+    /** 
+     * @return ResponseEntity<?>
+     */
     @GetMapping()
     public ResponseEntity<?> findAll() {
         return postService.find_all();
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/topic/{id}")
     public ResponseEntity<?> findAllByTopicId(@PathVariable("id") String id) {
         return postService.find_all_by_topic_id(id);
     }
-
+    
+    /** 
+     * @param postDto
+     * @param userDetails
+     * @return ResponseEntity<?>
+     */
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody PostDto postDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.create_post(postDto, userDetails);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") String id) {
         return postService.find_by_id(id);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return postService.delete_post(id);

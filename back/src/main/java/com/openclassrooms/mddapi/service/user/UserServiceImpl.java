@@ -31,12 +31,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Autowired
     private final UserMapper userMapper;
-
+    
+    /** 
+     * @param user
+     * @return User
+     * @throws Exception
+     */
     @Override
     public User create(User user) throws Exception {
         return userRepository.save(user);
     }
-
+    
+    /** 
+     * @param id
+     * @return User
+     * @throws Exception
+     */
     @Override
     public User findById(Long id) throws Exception {
         
@@ -47,20 +57,36 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Aucun compte trouvé.");
         }
     }
-
+    
+    /** 
+     * @param id
+     * @param user
+     * @return User
+     * @throws Exception
+     */
     @Override
     public User update(Long id, User user) throws Exception {
         user.setId(id);
         return userRepository.save(user);
     }
-
+    
+    /** 
+     * @param id
+     * @return String
+     * @throws Exception
+     */
     @Override
     public String delete(Long id) throws Exception {
         
         userRepository.deleteById(id);
         return "Le compte a bien été supprimé !";
     }
-
+    
+    /** 
+     * @param email
+     * @return User
+     * @throws Exception
+     */
     @Override
     public User findByEmail(String email) throws Exception {
 
@@ -71,12 +97,20 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Aucun compte trouvé.");
         }
     }
-
+    
+    /** 
+     * @return List<User>
+     * @throws Exception
+     */
     @Override
     public List<User> findAll() throws Exception {
         return userRepository.findAll();
-    }
+    }    
     
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> fetchUser(Long id) {
 
         User user = new User();
@@ -95,7 +129,12 @@ public class UserServiceImpl implements UserService {
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-
+    
+    /** 
+     * @param username
+     * @return User
+     * @throws Exception
+     */
     @Override
     public User findByUserName(String username) throws Exception {
         
@@ -106,12 +145,21 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Aucun compte trouvé.");
         }
     }
-
+    
+    /** 
+     * @param email
+     * @return Boolean
+     * @throws Exception
+     */
     @Override
     public Boolean existsByEmail(String email) throws Exception {
         return userRepository.existsByEmail(email);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> find_by_id(String id) {
         
         try {
@@ -129,7 +177,12 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    
+    /** 
+     * @param id
+     * @param userDto
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> update_account(String id, UserDto userDto) {
 
         Matcher matcher = emailFormatChecker(userDto.getEmail());
@@ -170,7 +223,11 @@ public class UserServiceImpl implements UserService {
 
         return ResponseEntity.ok(new MessageResponse("Compte mis à jour avec succès!")); 
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> delete_account(String id) {
         
         try {
@@ -194,7 +251,11 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    
+    /** 
+     * @param email
+     * @return Matcher
+     */
     public Matcher emailFormatChecker(String email) {
         
         String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";

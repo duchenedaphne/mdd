@@ -32,7 +32,12 @@ public class WebSecurityConfig {
   private final AuthenticationProvider authenticationProvider;
   @Autowired
   private final AuthTokenFilter authTokenFilter;
-
+  
+  /** 
+   * @param http
+   * @return SecurityFilterChain
+   * @throws Exception
+   */
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       http

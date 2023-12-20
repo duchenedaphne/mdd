@@ -21,7 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
-
+  
+  /** 
+   * @param request
+   * @param response
+   * @param authException
+   * @throws IOException
+   * @throws ServletException
+   */
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
       throws IOException, ServletException {

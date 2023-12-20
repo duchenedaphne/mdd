@@ -17,17 +17,30 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     
     private final UserServiceImpl userService;
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") String id) {
         return userService.find_by_id(id);
     }
-
+    
+    /** 
+     * @param id
+     * @param userDto
+     * @return ResponseEntity<?>
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String id, @Valid @RequestBody UserDto userDto) {
         return userService.update_account(id, userDto);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return userService.delete_account(id);

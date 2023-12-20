@@ -33,40 +33,70 @@ public class PostServiceImpl implements PostService {
     private final UserServiceImpl userService;
     @Autowired
     private final TopicServiceImpl topicService;
-
-	@Override
+	
+    /** 
+     * @return List<Post>
+     */
+    @Override
 	public List<Post> getPosts() {
 		return postRepository.findAll();
 	}
-
-	@Override
+	
+    /** 
+     * @return List<Post>
+     * @throws Exception
+     */
+    @Override
 	public List<Post> findAll() throws Exception {
 		return postRepository.findAll();
 	}
-
+    
+    /** 
+     * @param id
+     * @return List<Post>
+     * @throws Exception
+     */
     @Override
     public List<Post> findAllByTopicId(Long id) throws Exception {
         Topic topic = topicService.findById(id);
         return postRepository.findAllByTopic(topic);
     }
-
-	@Override
+	
+    /** 
+     * @param post
+     * @return Post
+     * @throws Exception
+     */
+    @Override
 	public Post create(Post post) throws Exception {
 		return postRepository.save(post);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return Post
+     * @throws Exception
+     */
+    @Override
 	public Post findById(Long id) throws Exception {
 		return postRepository.findById(id).orElse(null);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return String
+     * @throws Exception
+     */
+    @Override
 	public String delete(Long id) throws Exception {
 		postRepository.deleteById(id);
 		return "L'article a bien été supprimé.";
 	}
-
-	public ResponseEntity<?> find_all() {
+	
+    /** 
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_all() {
 		
         List<Post> posts;
         try {
@@ -78,8 +108,12 @@ public class PostServiceImpl implements PostService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> find_all_by_topic_id(String postId) {
+	
+    /** 
+     * @param postId
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_all_by_topic_id(String postId) {
 
         List<Post> posts;
         try {
@@ -90,9 +124,13 @@ public class PostServiceImpl implements PostService {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-	}
+	}	
 	
-	public ResponseEntity<?> find_by_id(String id) {
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_by_id(String id) {
 
         try {
             Post post = findById(Long.valueOf(id));
@@ -109,8 +147,13 @@ public class PostServiceImpl implements PostService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> create_post(PostDto postDto, UserDetailsImpl userDetails) {
+	
+    /** 
+     * @param postDto
+     * @param userDetails
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> create_post(PostDto postDto, UserDetailsImpl userDetails) {
 		
         postDto.setCreatedAt(LocalDateTime.now());
         log.info(postDto);
@@ -131,8 +174,12 @@ public class PostServiceImpl implements PostService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> delete_post(String id) {
+	
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> delete_post(String id) {
 		
         try {
             Post post = findById(Long.valueOf(id));

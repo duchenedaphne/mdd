@@ -22,7 +22,10 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     UserRepository userRepository;
     @Autowired
     TopicRepository topicRepository;
-
+    
+    /** 
+     * @return Post
+     */
     @Mappings({
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
@@ -31,7 +34,10 @@ public abstract class PostMapper implements EntityMapper<PostDto, Post> {
     })
     public abstract Post toEntity(PostDto postDto);
 
-
+    
+    /** 
+     * @return PostDto
+     */
     @Mappings({
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),

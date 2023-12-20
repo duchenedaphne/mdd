@@ -18,12 +18,18 @@ public class ApplicationConfig {
 
   @Autowired
   UserDetailsServiceImpl userDetailsService;
-
+  
+  /** 
+   * @return AuthTokenFilter
+   */
   @Bean
   AuthTokenFilter authTokenFilter() {
     return new AuthTokenFilter();
   }
-
+  
+  /** 
+   * @return AuthenticationProvider
+   */
   @Bean
   AuthenticationProvider authenticationProvider() {
 
@@ -34,12 +40,20 @@ public class ApplicationConfig {
       
     return authProvider;
   }
-
+  
+  /** 
+   * @param config
+   * @return AuthenticationManager
+   * @throws Exception
+   */
   @Bean
   AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
   }
-
+  
+  /** 
+   * @return PasswordEncoder
+   */
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

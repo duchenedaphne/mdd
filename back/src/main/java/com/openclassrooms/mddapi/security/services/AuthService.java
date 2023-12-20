@@ -38,7 +38,11 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private final UserServiceImpl userServiceImpl;
-
+    
+    /** 
+     * @param loginRequest
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> login(LoginRequest loginRequest) {
 
         User user;
@@ -86,7 +90,11 @@ public class AuthService {
                     .body(new MessageResponse("Échec de la connexion, veuillez réessayer."));
         }
     }
-
+    
+    /** 
+     * @param signUpRequest
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> register(SignupRequest signUpRequest) {
 
         Matcher matcher = emailFormatChecker(signUpRequest.getEmail());
@@ -131,7 +139,11 @@ public class AuthService {
 
         return ResponseEntity.ok(new MessageResponse("Compte créé avec succès!"));
     }
-
+    
+    /** 
+     * @param userDetails
+     * @return ResponseEntity<?>
+     */
     public ResponseEntity<?> getUserApp(UserDetails userDetails) {
 
         User userApp = new User();
@@ -150,7 +162,11 @@ public class AuthService {
         } 
         return new ResponseEntity<User>(userApp, HttpStatus.OK);
     }
-
+    
+    /** 
+     * @param email
+     * @return Matcher
+     */
     public Matcher emailFormatChecker(String email) {
         
         String regx = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";

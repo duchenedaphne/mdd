@@ -21,15 +21,20 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic> {
         
     @Autowired
     UserRepository userRepository;
-
+    
+    /** 
+     * @return Topic
+     */
     @Mappings({
             @Mapping(source = "name", target = "name"),
             @Mapping(source = "description", target = "description"),
             @Mapping(target = "users", expression = "java(Optional.ofNullable(topicDto.getUsers()).orElseGet(Collections::emptyList).stream().map(user_id -> { User user = this.userRepository.findById(user_id).orElse(null); if (user != null) { return user; } return null; }).collect(Collectors.toList()))"),
     })
     public abstract Topic toEntity(TopicDto topicDto);
-
-
+    
+    /** 
+     * @return TopicDto
+     */
     @Mappings({
             @Mapping(source = "name", target = "name"),
             @Mapping(source = "description", target = "description"),

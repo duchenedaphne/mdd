@@ -28,7 +28,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   private UserDetailsServiceImpl userDetailsService;
 
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
-
+  
+  /** 
+   * @param request
+   * @param response
+   * @param filterChain
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
@@ -53,7 +60,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     filterChain.doFilter(request, response);
   }
-
+  
+  /** 
+   * @param request
+   * @return String
+   */
   private String parseJwt(HttpServletRequest request) {
     String headerAuth = request.getHeader("Authorization");
 

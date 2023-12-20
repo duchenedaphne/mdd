@@ -29,30 +29,49 @@ public class UserDetailsImpl implements UserDetails {
   @JsonIgnore
   private String password;  
   
+  /** 
+   * @return Collection<? extends GrantedAuthority>
+   */
   public Collection<? extends GrantedAuthority> getAuthorities() {        
       return new HashSet<GrantedAuthority>();
   }
-
+  
+  /** 
+   * @return boolean
+   */
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
-
+  
+  /** 
+   * @return boolean
+   */
   @Override
   public boolean isAccountNonLocked() {
     return true;
   }
-
+  
+  /** 
+   * @return boolean
+   */
   @Override
   public boolean isCredentialsNonExpired() {
     return true;
   }
-
+  
+  /** 
+   * @return boolean
+   */
   @Override
   public boolean isEnabled() {
     return true;
   }
-
+  
+  /** 
+   * @param o
+   * @return boolean
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o)

@@ -22,15 +22,21 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
     UserRepository userRepository;
     @Autowired
     PostRepository postRepository;
-
+    
+    /** 
+     * @return Comment
+     */
     @Mappings({
             @Mapping(source = "content", target = "content"),
             @Mapping(target = "author", expression = "java(commentDto.getUser_name() != null ? this.userRepository.findByUserName(commentDto.getUser_name()).orElse(null) : null)"),
             @Mapping(target = "post", expression = "java(commentDto.getPost_title() != null ? this.postRepository.findByTitle(commentDto.getPost_title()).orElse(null) : null)"),
     })
     public abstract Comment toEntity(CommentDto commentDto);
-
-
+    
+    
+    /** 
+     * @return CommentDto
+     */
     @Mappings({
             @Mapping(source = "content", target = "content"),
             @Mapping(source = "comment.post.title", target = "post_title"),

@@ -33,40 +33,71 @@ public class CommentServiceImpl implements CommentService {
     private final PostServiceImpl postService;
     @Autowired
     private final UserServiceImpl userService;
-
-	@Override
+	
+    /** 
+     * @return List<Comment>
+     */
+    @Override
 	public List<Comment> getComments() {
 		return commentRepository.findAll();
 	}
-
-	@Override
+	
+    /** 
+     * @return List<Comment>
+     * @throws Exception
+     */
+    @Override
 	public List<Comment> findAll() throws Exception {
 		return commentRepository.findAll();
 	}
-
+    
+    /** 
+     * @param id
+     * @return List<Comment>
+     * @throws Exception
+     */
     @Override
     public List<Comment> findAllByPostId(Long id) throws Exception {
         Post post = postService.findById(id);
         return commentRepository.findAllByPost(post);
     }
-
-	@Override
+	
+    /** 
+     * @param comment
+     * @return Comment
+     * @throws Exception
+     */
+    @Override
 	public Comment create(Comment comment) throws Exception {
 		return commentRepository.save(comment);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return Comment
+     * @throws Exception
+     */
+    @Override
 	public Comment findById(Long id) throws Exception {
 		return commentRepository.findById(id).orElse(null);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return String
+     * @throws Exception
+     */
+    @Override
 	public String delete(Long id) throws Exception {
 		commentRepository.deleteById(id);
 		return "L'article a bien été supprimé.";
 	}
-
-	public ResponseEntity<?> find_all_by_post_id(String postId) {
+	
+    /** 
+     * @param postId
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_all_by_post_id(String postId) {
 
         List<Comment> comments;
         try {
@@ -78,8 +109,13 @@ public class CommentServiceImpl implements CommentService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> create_comment(CommentDto commentDto, UserDetailsImpl userDetails) {
+	
+    /** 
+     * @param commentDto
+     * @param userDetails
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> create_comment(CommentDto commentDto, UserDetailsImpl userDetails) {
 		
         commentDto.setCreatedAt(LocalDateTime.now());
         log.info(commentDto);
@@ -99,9 +135,13 @@ public class CommentServiceImpl implements CommentService {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-	}
+	}	
 	
-	public ResponseEntity<?> find_by_id(String id) {
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_by_id(String id) {
 
         try {
             Comment comment = findById(Long.valueOf(id));
@@ -118,8 +158,12 @@ public class CommentServiceImpl implements CommentService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> delete_comment(String id) {
+	
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> delete_comment(String id) {
 		
         try {
             Comment comment = findById(Long.valueOf(id));

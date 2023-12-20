@@ -23,7 +23,11 @@ public class JwtUtils {
 
   @Value("${oc.app.jwtExpirationMs}")
   private int jwtExpirationMs;
-
+  
+  /** 
+   * @param authentication
+   * @return String
+   */
   public String generateJwtToken(Authentication authentication) {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -35,11 +39,19 @@ public class JwtUtils {
         .signWith(SignatureAlgorithm.HS512, jwtSecret)
         .compact();
   }
-
+  
+  /** 
+   * @param token
+   * @return String
+   */
   public String getUserNameFromJwtToken(String token) {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
   }
-
+  
+  /** 
+   * @param authToken
+   * @return boolean
+   */
   public boolean validateJwtToken(String authToken) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

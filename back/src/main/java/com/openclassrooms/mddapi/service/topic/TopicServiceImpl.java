@@ -34,40 +34,72 @@ public class TopicServiceImpl implements TopicService {
 	private final UserRepository userRepository;
     @Autowired
     private final UserServiceImpl userService;
-
-	@Override
+	
+    /** 
+     * @return List<Topic>
+     */
+    @Override
 	public List<Topic> getTopics() {
 		return topicRepository.findAll();
 	}
-
-	@Override
+	
+    /** 
+     * @param topic
+     * @return Topic
+     * @throws Exception
+     */
+    @Override
 	public Topic create(Topic topic) throws Exception {
 		return topicRepository.save(topic);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return Topic
+     * @throws Exception
+     */
+    @Override
 	public Topic findById(Long id) throws Exception {
 		return topicRepository.findById(id).orElse(null);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @return String
+     * @throws Exception
+     */
+    @Override
 	public String delete(Long id) throws Exception {
 		topicRepository.deleteById(id);
 		return "Le thème a bien été supprimé.";
 	}
-
-	@Override
+	
+    /** 
+     * @return List<Topic>
+     * @throws Exception
+     */
+    @Override
 	public List<Topic> findAll() throws Exception {
 		return topicRepository.findAll();
 	}
-
+    
+    /** 
+     * @param id
+     * @return List<Topic>
+     * @throws Exception
+     */
     @Override
     public List<Topic> findAllByUserId(Long id) throws Exception {
         User user = userService.findById(id);
         return topicRepository.findAllByUsers(user);
     }
-
-	@Override
+	
+    /** 
+     * @param id
+     * @param userId
+     * @throws Exception
+     */
+    @Override
 	public void subscribe(Long id, Long userId) throws Exception {
 		
 		Topic topic = topicRepository.findById(id).orElse(null);
@@ -88,8 +120,13 @@ public class TopicServiceImpl implements TopicService {
 
 		topicRepository.save(topic);
 	}
-
-	@Override
+	
+    /** 
+     * @param id
+     * @param userId
+     * @throws Exception
+     */
+    @Override
 	public void unSubscribe(Long id, Long userId) throws Exception {
 		
 		Topic topic = topicRepository.findById(id).orElse(null);
@@ -107,9 +144,13 @@ public class TopicServiceImpl implements TopicService {
 		topic.setUsers(topic.getUsers().stream().filter(subscriber -> !subscriber.getId().equals(userId)).collect(Collectors.toList()));
 
 		topicRepository.save(topic);
-	}
+	}	
 	
-	public ResponseEntity<?> find_by_id(String id) {
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_by_id(String id) {
 
         try {
             Topic topic = findById(Long.valueOf(id));
@@ -126,8 +167,11 @@ public class TopicServiceImpl implements TopicService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> find_all() {
+	
+    /** 
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_all() {
 		
         List<Topic> topics;
         try {
@@ -139,8 +183,12 @@ public class TopicServiceImpl implements TopicService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> find_all_by_user_id(String postId) {
+	
+    /** 
+     * @param postId
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> find_all_by_user_id(String postId) {
 
         List<Topic> topics;
         try {
@@ -152,8 +200,12 @@ public class TopicServiceImpl implements TopicService {
             return ResponseEntity.badRequest().build();
         }
 	}
-
-	public ResponseEntity<?> create_topic(TopicDto topicDto) {
+	
+    /** 
+     * @param topicDto
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> create_topic(TopicDto topicDto) {
 		
         topicDto.setCreatedAt(LocalDateTime.now());
         log.info(topicDto);
@@ -171,7 +223,12 @@ public class TopicServiceImpl implements TopicService {
         }
 	}
 
-	public ResponseEntity<?> delete_topic(String id) {
+	
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> delete_topic(String id) {
 		
         try {
             Topic topic = findById(Long.valueOf(id));
@@ -190,7 +247,13 @@ public class TopicServiceImpl implements TopicService {
         }
 	}
 	
-	public ResponseEntity<?> subscription(String id, String userId) {
+	
+    /** 
+     * @param id
+     * @param userId
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> subscription(String id, String userId) {
 		
         try {
             subscribe(Long.parseLong(id), Long.parseLong(userId));
@@ -204,8 +267,13 @@ public class TopicServiceImpl implements TopicService {
             return ResponseEntity.badRequest().build();
 		}
 	}
-
-	public ResponseEntity<?> subscription_cancelling(String id, String userId) {
+	
+    /** 
+     * @param id
+     * @param userId
+     * @return ResponseEntity<?>
+     */
+    public ResponseEntity<?> subscription_cancelling(String id, String userId) {
 		
         try {
             unSubscribe(Long.parseLong(id), Long.parseLong(userId));

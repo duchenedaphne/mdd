@@ -18,22 +18,39 @@ import lombok.RequiredArgsConstructor;
 public class CommentController {
 
     private final CommentServiceImpl commentService;
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/post/{id}")
     public ResponseEntity<?> findAllByPostId(@PathVariable("id") String id) {
         return commentService.find_all_by_post_id(id);
     }
-
+    
+    /** 
+     * @param commentDto
+     * @param userDetails
+     * @return ResponseEntity<?>
+     */
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody CommentDto commentDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.create_comment(commentDto, userDetails);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") String id) {
         return commentService.find_by_id(id);
     }
-
+    
+    /** 
+     * @param id
+     * @return ResponseEntity<?>
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         return commentService.delete_comment(id);

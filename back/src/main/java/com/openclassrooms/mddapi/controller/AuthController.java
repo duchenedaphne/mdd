@@ -24,12 +24,20 @@ public class AuthController {
     
     @Autowired
     private final AuthService authService;
-
+    
+    /** 
+     * @param loginRequest
+     * @return ResponseEntity<?>
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
-
+    
+    /** 
+     * @param signUpRequest
+     * @return ResponseEntity<?>
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signUpRequest) {
         return authService.register(signUpRequest);
